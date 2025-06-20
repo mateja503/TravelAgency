@@ -1,40 +1,7 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.repository\\data\\migrations\\20250620103347_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|solutionrelative:travelagency.repository\\data\\migrations\\20250620103347_initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.repository\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|solutionrelative:travelagency.repository\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.domain\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|solutionrelative:travelagency.domain\\models\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.domain\\valueobjects\\address.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|solutionrelative:travelagency.domain\\valueobjects\\address.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.repository\\travelagency.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{017720CF-1EE7-4DDF-A812-1FFDC8A56E0E}|TravelAgency.Repository\\TravelAgency.Repository.csproj|solutionrelative:travelagency.repository\\travelagency.repository.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18450C27-684F-4422-9DE1-8B4D2D6952AB}|TravelAgency\\TravelAgency.Web.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency\\travelagency.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{18450C27-684F-4422-9DE1-8B4D2D6952AB}|TravelAgency\\TravelAgency.Web.csproj|solutionrelative:travelagency\\travelagency.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{18450C27-684F-4422-9DE1-8B4D2D6952AB}|TravelAgency\\TravelAgency.Web.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{18450C27-684F-4422-9DE1-8B4D2D6952AB}|TravelAgency\\TravelAgency.Web.csproj|solutionrelative:travelagency\\views\\shared\\_loginpartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|c:\\users\\matej\\onedrive\\desktop\\faks\\is\\travelagency\\travelagency.domain\\travelagency.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{337447DE-F2DA-4A4C-BACC-05F94BE7B574}|TravelAgency.Domain\\TravelAgency.Domain.csproj|solutionrelative:travelagency.domain\\travelagency.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency - Copy\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -42,114 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20250620103347_Initial.cs",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\Data\\Migrations\\20250620103347_Initial.cs",
-              "RelativeDocumentMoniker": "TravelAgency.Repository\\Data\\Migrations\\20250620103347_Initial.cs",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\Data\\Migrations\\20250620103347_Initial.cs",
-              "RelativeToolTip": "TravelAgency.Repository\\Data\\Migrations\\20250620103347_Initial.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T10:33:47.867Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Booking.cs",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\Models\\Booking.cs",
-              "RelativeDocumentMoniker": "TravelAgency.Domain\\Models\\Booking.cs",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\Models\\Booking.cs",
-              "RelativeToolTip": "TravelAgency.Domain\\Models\\Booking.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T10:32:22.196Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Address.cs",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\ValueObjects\\Address.cs",
-              "RelativeDocumentMoniker": "TravelAgency.Domain\\ValueObjects\\Address.cs",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\ValueObjects\\Address.cs",
-              "RelativeToolTip": "TravelAgency.Domain\\ValueObjects\\Address.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T10:28:34.226Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "TravelAgency.Repository\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "TravelAgency.Repository\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAA5wC4AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-20T10:28:25.026Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TravelAgency.Repository.csproj",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\TravelAgency.Repository.csproj",
-              "RelativeDocumentMoniker": "TravelAgency.Repository\\TravelAgency.Repository.csproj",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Repository\\TravelAgency.Repository.csproj",
-              "RelativeToolTip": "TravelAgency.Repository\\TravelAgency.Repository.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-20T10:18:41.312Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "_LoginPartial.cshtml",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeDocumentMoniker": "TravelAgency\\Views\\Shared\\_LoginPartial.cshtml",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency\\Views\\Shared\\_LoginPartial.cshtml",
-              "RelativeToolTip": "TravelAgency\\Views\\Shared\\_LoginPartial.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-20T10:17:03.18Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TravelAgency.Web.csproj",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency\\TravelAgency.Web.csproj",
-              "RelativeDocumentMoniker": "TravelAgency\\TravelAgency.Web.csproj",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency\\TravelAgency.Web.csproj",
-              "RelativeToolTip": "TravelAgency\\TravelAgency.Web.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-20T10:10:36.596Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "TravelAgency.Domain.csproj",
-              "DocumentMoniker": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
-              "RelativeDocumentMoniker": "TravelAgency.Domain\\TravelAgency.Domain.csproj",
-              "ToolTip": "C:\\Users\\matej\\OneDrive\\Desktop\\faks\\IS\\TravelAgency\\TravelAgency.Domain\\TravelAgency.Domain.csproj",
-              "RelativeToolTip": "TravelAgency.Domain\\TravelAgency.Domain.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-06-20T10:10:00.463Z",
-              "EditorCaption": ""
             }
           ]
         }
