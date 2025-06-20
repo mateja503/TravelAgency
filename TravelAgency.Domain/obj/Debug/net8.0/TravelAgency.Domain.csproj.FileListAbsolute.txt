@@ -13,3 +13,18 @@ C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Deb
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.runtimeconfig.json
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.genruntimeconfig.cache
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.sourcelink.json
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.deps.json
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.runtimeconfig.json
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.dll
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.pdb
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.csproj.AssemblyReference.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.AssemblyInfoInputs.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.AssemblyInfo.cs
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.csproj.CoreCompileInputs.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.sourcelink.json
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.dll
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\refint\TravelAgency.Domain.dll
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.pdb
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.genruntimeconfig.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency - Copy\TravelAgency.Domain\obj\Debug\net8.0\ref\TravelAgency.Domain.dll
