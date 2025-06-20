@@ -15,3 +15,4 @@ C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Repository\bin
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Repository\obj\Debug\net8.0\TravelAg.13BC5B12.Up2Date
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Repository\bin\Debug\net8.0\TravelAgency.Repository.runtimeconfig.json
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Repository\obj\Debug\net8.0\TravelAgency.Repository.genruntimeconfig.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Repository\obj\Debug\net8.0\TravelAgency.Repository.sourcelink.json

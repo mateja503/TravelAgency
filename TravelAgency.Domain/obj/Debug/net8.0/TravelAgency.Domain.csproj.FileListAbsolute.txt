@@ -12,3 +12,4 @@ C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Deb
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.csproj.AssemblyReference.cache
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\bin\Debug\net8.0\TravelAgency.Domain.runtimeconfig.json
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.genruntimeconfig.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Domain\obj\Debug\net8.0\TravelAgency.Domain.sourcelink.json

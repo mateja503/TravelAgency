@@ -17,3 +17,4 @@ C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Service\obj\De
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Service\obj\Debug\net8.0\TravelAg.8873A460.Up2Date
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Service\bin\Debug\net8.0\TravelAgency.Service.runtimeconfig.json
 C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Service\obj\Debug\net8.0\TravelAgency.Service.genruntimeconfig.cache
+C:\Users\matej\OneDrive\Desktop\faks\IS\TravelAgency\TravelAgency.Service\obj\Debug\net8.0\TravelAgency.Service.sourcelink.json
