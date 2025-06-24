@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TravelAgency.Repository.Data;
 using TravelAgency.Repository.Extensions;
 using TravelAgency.Repository.Identity;
+using TravelAgency.Service.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.RegisterRepository();
+builder.Services.RegisterService();
 
 var app = builder.Build();
 
