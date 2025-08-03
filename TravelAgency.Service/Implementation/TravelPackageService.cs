@@ -36,6 +36,7 @@ namespace TravelAgency.Service.Implementation
         public async Task<TravelPackageDto> GetTravelPackageDetail(int id) 
         {
             var travelPackege = await _travelPackageRepository.GetTravelPackageForDetail(id);
+            throw new NotImplementedException();
         }
         public async Task<TravelPackage?> Update(int id, TravelPackage item)
         {
