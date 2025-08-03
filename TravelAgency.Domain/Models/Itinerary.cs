@@ -11,9 +11,7 @@ namespace TravelAgency.Domain.Models
     {
         [Key]
         public int Id { get; set; }
-
         public List<ItineraryActivity> ItineraryActivities { get; set; }
-
         public List<ItineraryTravelPackage> ItineraryTravelPackage { get; set; }
     }
 }

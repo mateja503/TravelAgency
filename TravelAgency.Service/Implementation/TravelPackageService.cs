@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Interface;
 using TravelAgency.Service.Interface;
@@ -29,9 +30,13 @@ namespace TravelAgency.Service.Implementation
 
         public async Task<TravelPackage?> GetById(int id)
         {
-            return await this._travelPackageRepository.GetById(u=>u.Id == id);
+            return await _travelPackageRepository.GetById(u=>u.Id == id);
         }
 
+        public async Task<TravelPackageDto> GetTravelPackageDetail(int id) 
+        {
+            var travelPackege = await _travelPackageRepository.GetTravelPackageForDetail(id);
+        }
         public async Task<TravelPackage?> Update(int id, TravelPackage item)
         {
             return await this._travelPackageRepository.Update(id,item);

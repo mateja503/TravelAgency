@@ -13,20 +13,13 @@ namespace TravelAgency.Domain.Models
     {
         [Key]
         public int Id { get; set; }
-
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
-
         public TravelPackage? TravelPackage { get; set; }
-
         public int? TravelPackageId { get; set; }
-
         public Itinerary? Itinerary { get; set; }
-
         public int? ItineraryId { get; set; }
-
         public BookingStatus Status { get; set; }
-
         public DateRange DateRange { get; set; }
     }
 }

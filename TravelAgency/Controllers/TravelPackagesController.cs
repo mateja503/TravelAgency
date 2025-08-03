@@ -27,6 +27,8 @@ namespace TravelAgency.Controllers
             }
 
             var travelPackage = await _travelpackageService.GetById(id ?? 0);
+
+
             if (travelPackage == null)
             {
                 return NotFound();
@@ -154,9 +156,13 @@ namespace TravelAgency.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> GetPropertiesHTML() 
+        {
+            return View();
+        }
+
         private  bool TravelPackageExists(int id)
         {
             return _travelpackageService.GetAll().GetAwaiter().GetResult().Any(e => e.Id == id);
-        }
-    }
+        }    }
 }
