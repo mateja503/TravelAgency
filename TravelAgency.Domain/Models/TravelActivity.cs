@@ -14,6 +14,6 @@ namespace TravelAgency.Domain.Models
         public int Id { get; set; }
         public SeasonType SeasonType { get; set; }
         public string ActivityName { get; set; }
-        public List<ItineraryActivity> ItineraryActivities { get; set; }
+        public List<ItineraryActivity>? ItineraryActivities { get; set; }
     }
 }

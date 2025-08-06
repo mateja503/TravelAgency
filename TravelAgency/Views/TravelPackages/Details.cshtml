@@ -1,4 +1,4 @@
-﻿@model TravelAgency.Domain.Models.TravelPackage
+﻿@model TravelAgency.Domain.DTOs.TravelPackageDto
 
 @{
     ViewData["Title"] = "Details";
@@ -70,12 +70,8 @@
                                             </div> *@
                                             <div class="info-table">
                                                 <ul>
-                                                    <li>Title <span> @Model.Tittle</span></li>
-                                                    <li>Price <span> @Model.Price.Amount.ToString("F2")</span></li>
-                                                    <li>Description <span>@Model.Description</span></li>
-                                                    <li>Capacity <span>@Model.Capacity</span></li>
-                                                    <li>From <span>@Model.DateRange.From.ToShortDateString()</span></li>
-                                                    <li>To <span>@Model.DateRange.To.ToShortDateString()</span></li>
+                                                    <li>Season <span> @Model.Tittle</span></li>
+                                                    <li>ActivityName <span> @Model.Price.Amount.ToString("F2")</span></li>
                                                 </ul>
                                             </div>
                                         </div>

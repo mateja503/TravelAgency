@@ -26,7 +26,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelPackage = await _travelpackageService.GetById(id ?? 0);
+            var travelPackage = await _travelpackageService.GetTravelPackageDetail(id ?? 0);
 
 
             if (travelPackage == null)

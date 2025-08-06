@@ -23,7 +23,7 @@ namespace TravelAgency.Repository.Implementation
         }
 
         public async Task<TravelPackageDto?> GetTravelPackageForDetail(int id) 
-        {//TODO
+        {
             return await _db.TravelPackages.Where(u => u.Id == id)
                 .Include(u => u.ItineraryTravelPackage)
                     .ThenInclude(u => u.Itinerary)
@@ -34,9 +34,19 @@ namespace TravelAgency.Repository.Implementation
                     Tittle = u.Tittle,
                     Description = u.Description,
                     Capacity = u.Capacity,
-                    DateRange = u.DateRange
+                    DateRange = u.DateRange,
+                    Price = u.Price,
+                     TravelActivitiesList = u.ItineraryTravelPackage
+                        .SelectMany(itp => itp.Itinerary.ItineraryActivities)
+                        .Select(ia => ia.TravelActivity)
+                         //.Distinct() 
+                         .Select(ta => new TravelActivityDto
+                                {
+                                    ActivityName = ta.ActivityName,
+                                    SeasonType = ta.SeasonType
+                                })
+                                .ToList()
 
-                 
                  })
                  .FirstOrDefaultAsync();
         }
