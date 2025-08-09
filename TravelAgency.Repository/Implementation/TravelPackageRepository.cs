@@ -29,22 +29,31 @@ namespace TravelAgency.Repository.Implementation
                     .ThenInclude(u => u.Itinerary)
                     .ThenInclude(u => u.ItineraryActivities)
                     .ThenInclude(u => u.TravelActivity)
-                 .Select(u => new TravelPackageDto() 
+                 .Select(u => new TravelPackageDto()
                  {
+                    Id = u.Id,
                     Tittle = u.Tittle,
-                    Description = u.Description,
-                    Capacity = u.Capacity,
-                    DateRange = u.DateRange,
-                    Price = u.Price,
+                     Description = u.Description,
+                     Capacity = u.Capacity,
+                     DateRange = new DateRangeDto() 
+                     {
+                        From = u.DateRange.From,
+                        To = u.DateRange.To,
+                     },
+                     Price = new PriceDto() 
+                     {
+                         Amount = u.Price.Amount,
+                         Currency = u.Price.TypeCurrency
+                     },
                      TravelActivitiesList = u.ItineraryTravelPackage
                         .SelectMany(itp => itp.Itinerary.ItineraryActivities)
                         .Select(ia => ia.TravelActivity)
                          //.Distinct() 
                          .Select(ta => new TravelActivityDto
-                                {
-                                    ActivityName = ta.ActivityName,
-                                    SeasonType = ta.SeasonType
-                                })
+                         {
+                             ActivityName = ta.ActivityName,
+                             SeasonType = ta.SeasonType
+                         })
                                 .ToList()
 
                  })

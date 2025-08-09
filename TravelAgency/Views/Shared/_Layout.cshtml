@@ -30,8 +30,8 @@
 </head>
 <body>
 
-    <header class="header-area header-sticky">
-        <div class="container">
+    <header class="header-area header-sticky" style="padding-left: 5vw; padding-right: 4vw">
+        <div class="container" style="display: contents">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
@@ -44,8 +44,13 @@
                         <ul class="nav">
                             <li><a asp-controller="Home" asp-action="Index" class="active">Home</a></li>
                             <li><a asp-controller="TravelPackages" asp-action="Index">TravelPackages</a></li>
+                            <li><a asp-controller="Bookings" asp-action="Index">Bookings</a></li>
+                            @* <li><a asp-controller="Itineraries" asp-action="Index">Itineraries</a></li> *@
+                            <li><a asp-controller="ItineraryActivities" asp-action="Index">ItineraryActivities</a></li>
+                            <li><a asp-controller="ItineraryTravelPackages" asp-action="Index">ItineraryTravelPackages</a></li>
+
                             @* <li><a asp-controller="TravelPackages" asp-action="GetPropertiesHTML">Property Details</a></li> *@
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a <a asp-controller="Home" asp-action="ContactUs">Contact Us</a></li>
                             <partial name="_LoginPartial" />
                             <li><a href="#"><i class="fa fa-calendar"></i> Schedule a booking</a></li>
                         </ul>

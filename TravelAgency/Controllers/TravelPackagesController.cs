@@ -60,7 +60,7 @@ namespace TravelAgency.Controllers
                     Price = new Price 
                     {
                         Amount = model.Amount,
-                        TypeCurrencty = model.TypeCurrency
+                        TypeCurrency = model.TypeCurrency
                     },
                     DateRange = new DateRange 
                     {

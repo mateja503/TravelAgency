@@ -11,16 +11,31 @@ namespace TravelAgency.Domain.DTOs
 {
     public record TravelPackageDto
     {
+
+        public int Id { get; set; }
         public string Tittle { get; init; }
         public string Description { get; init; }
         public int Capacity { get; init; }
-        public Price Price { get; init; }
-        public DateRange DateRange { get; init; }
+        public PriceDto Price { get; init; }
+        public DateRangeDto DateRange { get; init; }
         public List<TravelActivityDto> TravelActivitiesList { get; init; }
     } 
     public record TravelActivityDto 
     {
         public SeasonType SeasonType { get; set; }
         public string ActivityName { get; set; }
+    }
+
+
+    public record PriceDto 
+    {
+        public double Amount { get; init; }
+        public TypeCurrency Currency { get; init; }
+    }
+
+    public record DateRangeDto 
+    {
+        public DateTime From { get; init; }
+        public DateTime To { get; init; }
     }
 }

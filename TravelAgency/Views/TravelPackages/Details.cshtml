@@ -70,8 +70,12 @@
                                             </div> *@
                                             <div class="info-table">
                                                 <ul>
-                                                    <li>Season <span> @Model.Tittle</span></li>
-                                                    <li>ActivityName <span> @Model.Price.Amount.ToString("F2")</span></li>
+                                                    @foreach (var n in Model.TravelActivitiesList)
+                                                    {
+                                                        <li>Season <span> @n.SeasonType.ToString() </span></li>
+                                                          <li>ActivityName <span> @n.ActivityName</span></li>
+                                                    }
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
@@ -102,31 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @* <div class="tab-pane fade" id="penthouse" role="tabpanel" aria-labelledby="penthouse-tab">
-                                    <div class="row">
-                                        <div class="col-lg-3">
-                                            <div class="info-table">
-                                                <ul>
-                                                    <li>Total Flat Space <span>320 m2</span></li>
-                                                    <li>Floor number <span>34th</span></li>
-                                                    <li>Number of rooms <span>6</span></li>
-                                                    <li>Parking Available <span>Yes</span></li>
-                                                    <li>Payment Process <span>Bank</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <img src="assets/images/deal-03.jpg" alt="">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <h4>Extra Info About Penthouse</h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut Kinfolk tonx seitan crucifix 3 wolf moon bicycle rights keffiyeh snackwave wolf same vice, chillwave vexillologistlabore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
-                                            <div class="icon-button">
-                                                <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> *@
+                               
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,6 @@ namespace TravelAgency.Domain.ValueObjects
     {
         public double Amount { get; set; }
 
-        public TypeCurrency TypeCurrencty { get; set; }
+        public TypeCurrency TypeCurrency { get; set; }
     }
 }
