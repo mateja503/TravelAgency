@@ -22,47 +22,12 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public async Task<TravelPackageDto?> GetTravelPackageForDetail(int id) 
+       
+        public async Task<TravelPackage> Update(TravelPackage item)
         {
-            return await _db.TravelPackages.Where(u => u.Id == id)
-                .Include(u => u.ItineraryTravelPackage)
-                    .ThenInclude(u => u.Itinerary)
-                    .ThenInclude(u => u.ItineraryActivities)
-                    .ThenInclude(u => u.TravelActivity)
-                 .Select(u => new TravelPackageDto()
-                 {
-                    Id = u.Id,
-                    Tittle = u.Tittle,
-                     Description = u.Description,
-                     Capacity = u.Capacity,
-                     DateRange = new DateRangeDto() 
-                     {
-                        From = u.DateRange.From,
-                        To = u.DateRange.To,
-                     },
-                     Price = new PriceDto() 
-                     {
-                         Amount = u.Price.Amount,
-                         Currency = u.Price.TypeCurrency
-                     },
-                     TravelActivitiesList = u.ItineraryTravelPackage
-                        .SelectMany(itp => itp.Itinerary.ItineraryActivities)
-                        .Select(ia => ia.TravelActivity)
-                         //.Distinct() 
-                         .Select(ta => new TravelActivityDto
-                         {
-                             ActivityName = ta.ActivityName,
-                             SeasonType = ta.SeasonType
-                         })
-                                .ToList()
-
-                 })
-                 .FirstOrDefaultAsync();
-        }
-
-        public Task<TravelPackage> Update(TravelPackage item)
-        {
-            throw new NotImplementedException();
+             _db.TravelPackages.Update(item);
+             await _db.SaveChangesAsync();
+             return item;
         }
     }
 }

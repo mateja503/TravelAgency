@@ -31,6 +31,8 @@ namespace TravelAgency.Repository.General.Implementation
             IQueryable<T> query = _db.Set<T>();
             query = query.Where(filter);
             var res = await query.SingleOrDefaultAsync();
+            _db.Remove(res!);
+            await _db.SaveChangesAsync();
             return res;
         }
 

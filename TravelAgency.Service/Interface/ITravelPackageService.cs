@@ -12,6 +12,5 @@ namespace TravelAgency.Service.Interface
 
     public interface ITravelPackageService : IGeneralService<TravelPackage>
     {
-        public Task<TravelPackageDto?> GetTravelPackageDetail(int id);
     }
 }

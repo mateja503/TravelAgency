@@ -34,11 +34,7 @@ namespace TravelAgency.Service.Implementation
             return await _travelPackageRepository.GetById(u=>u.Id == id);
         }
 
-        public async Task<TravelPackageDto?> GetTravelPackageDetail(int id) 
-        {
-            var travelPackege = await _travelPackageRepository.GetTravelPackageForDetail(id);
-            return travelPackege;
-        }
+      
         public async Task<TravelPackage?> Update(TravelPackage item)
         {
             return await this._travelPackageRepository.Update(item);

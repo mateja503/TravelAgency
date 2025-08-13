@@ -13,6 +13,5 @@ namespace TravelAgency.Repository.Interface
     {
         public Task<TravelPackage> Update(TravelPackage item);
 
-        public Task<TravelPackageDto?> GetTravelPackageForDetail(int id);
     }
 }

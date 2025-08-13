@@ -1,7 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
+using TravelAgency.Domain.Shared;
 using TravelAgency.Domain.ValueObjects;
 using TravelAgency.Service.Interface;
 using TravelAgency.ViewModels;
@@ -26,7 +28,40 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelPackage = await _travelpackageService.GetTravelPackageDetail(id ?? 0);
+            var travelPackage = _travelpackageService.GetAll().Where(u => u.Id == id)
+                .Include(u => u.ItineraryTravelPackage)
+                    .ThenInclude(u => u.Itinerary)
+                    .ThenInclude(u => u.ItineraryActivities)
+                    .ThenInclude(u => u.TravelActivity)
+                 .Select(u => new TravelPackageDto()
+                 {
+                     Id = u.Id,
+                     Tittle = u.Tittle,
+                     Description = u.Description,
+                     Capacity = u.Capacity,
+                     DateRange = new DateRangeDto()
+                     {
+                         From = u.DateRange.From,
+                         To = u.DateRange.To,
+                     },
+                     Price = new PriceDto()
+                     {
+                         Amount = u.Price.Amount,
+                         Currency = u.Price.TypeCurrency
+                     },
+                     TravelActivitiesList = u.ItineraryTravelPackage
+                        .SelectMany(itp => itp.Itinerary.ItineraryActivities)
+                        .Select(ia => ia.TravelActivity)
+                         //.Distinct() 
+                         .Select(ta => new TravelActivityDto
+                         {
+                             ActivityName = ta.ActivityName,
+                             SeasonType = ta.SeasonType
+                         })
+                                .ToList()
+
+                 })
+                 .FirstOrDefaultAsync();
 
 
             if (travelPackage == null)
@@ -96,7 +131,7 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Tittle,Description,Capacity")] TravelPackage travelPackage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tittle,Description,Capacity,Price,DateRange")] TravelPackage travelPackage)
         {
             if (id != travelPackage.Id)
             {
@@ -147,18 +182,8 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var travelPackage = await  _travelpackageService.GetById(id);
-            if (travelPackage != null)
-            {
-                await _travelpackageService.DeleteById(id);
-            }
-
+            await _travelpackageService.DeleteById(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> GetPropertiesHTML() 
-        {
-            return View();
         }
 
         private  bool TravelPackageExists(int id)
