@@ -18,9 +18,9 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public async Task<Booking?> Update(int id, Booking item)
+        public async Task<Booking?> Update(Booking item)
         {
-            var res = await GetById(u => u.Id == id);
+            var res = await GetById(u => u.Id == item.Id);
             if (res == null)
             {
                 return null;

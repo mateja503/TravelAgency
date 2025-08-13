@@ -34,9 +34,10 @@ namespace TravelAgency.Repository.General.Implementation
             return res;
         }
 
-        public async Task<List<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return await _db.Set<T>().ToListAsync();
+            //return await _db.Set<T>().ToListAsync();
+            return  _db.Set<T>().AsQueryable();
 
         }
 

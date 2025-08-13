@@ -10,7 +10,7 @@ namespace TravelAgency.Repository.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } 
         public int CustomerId { get; set; }
 
     }

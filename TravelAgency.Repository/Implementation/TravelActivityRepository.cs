@@ -19,7 +19,7 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public Task<TravelActivity> Update(int id, TravelActivity item)
+        public Task<TravelActivity> Update(TravelActivity item)
         {
             throw new NotImplementedException();
         }

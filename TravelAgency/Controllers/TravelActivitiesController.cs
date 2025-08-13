@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.Shared;
 using TravelAgency.Repository.Data;
+using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
 {
     public class TravelActivitiesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public TravelActivitiesController(ApplicationDbContext context)
+        private readonly ITravelActivityService _travelActivityService;
+        public TravelActivitiesController(ITravelActivityService travelActivityService)
         {
-            _context = context;
+            _travelActivityService = travelActivityService;
         }
 
         // GET: TravelActivities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TravelActivities.ToListAsync());
+            return View(await _travelActivityService.GetAll().ToListAsync());
         }
 
         // GET: TravelActivities/Details/5
@@ -34,7 +34,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelActivity = await _context.TravelActivities
+            var travelActivity = await _travelActivityService.GetAll()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (travelActivity == null)
             {
@@ -56,13 +56,11 @@ namespace TravelAgency.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,SeasonType,ActivityName")] TravelActivity travelActivity)
-        
         {
             
             if (ModelState.IsValid)
             {
-                _context.Add(travelActivity);
-                await _context.SaveChangesAsync();
+                await _travelActivityService.Add(travelActivity);
                 return RedirectToAction(nameof(Index));
             }
            
@@ -77,7 +75,8 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelActivity = await _context.TravelActivities.FindAsync(id);
+            var travelActivity = await _travelActivityService.GetAll()
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (travelActivity == null)
             {
                 return NotFound();
@@ -101,8 +100,7 @@ namespace TravelAgency.Controllers
             {
                 try
                 {
-                    _context.Update(travelActivity);
-                    await _context.SaveChangesAsync();
+                    await _travelActivityService.Update(travelActivity);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,7 +126,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelActivity = await _context.TravelActivities
+            var travelActivity = await _travelActivityService.GetAll()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (travelActivity == null)
             {
@@ -143,19 +141,20 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var travelActivity = await _context.TravelActivities.FindAsync(id);
+            var travelActivity = await _travelActivityService.GetAll()
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (travelActivity != null)
             {
-                _context.TravelActivities.Remove(travelActivity);
+                await _travelActivityService.DeleteById(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TravelActivityExists(int id)
         {
-            return _context.TravelActivities.Any(e => e.Id == id);
+            return _travelActivityService.GetAll()
+                .Any(m => m.Id == id);
         }
     }
 }

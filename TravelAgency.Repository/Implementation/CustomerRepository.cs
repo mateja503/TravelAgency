@@ -18,14 +18,14 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public async Task<Customer?> Update(int id, Customer item)
+        public async Task<Customer?> Update( Customer item)
         {
-            var res = await GetById(u => u.Id == id);
+            var res = await GetById(u => u.Id == item.Id);
             if (res == null) {
                 return null;
             }
             res.Name = item.Name;
-            res.Address = item.Address;
+            //res.Address = item.Address;
             _db.Update(res);
             await _db.SaveChangesAsync();
             return res;

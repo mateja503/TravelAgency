@@ -7,22 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
+using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
 {
     public class ItinerariesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IItineraryService _itineraryService;
 
-        public ItinerariesController(ApplicationDbContext context)
+        public ItinerariesController(ApplicationDbContext context, IItineraryService itineraryService)
         {
-            _context = context;
+            _itineraryService = itineraryService;
         }
 
         // GET: Itineraries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Itineraries.ToListAsync());
+            return View(await _itineraryService.GetAll().ToListAsync());
         }
 
         // GET: Itineraries/Details/5
@@ -33,8 +34,8 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itinerary = await _context.Itineraries
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+
             if (itinerary == null)
             {
                 return NotFound();
@@ -58,8 +59,7 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(itinerary);
-                await _context.SaveChangesAsync();
+                await _itineraryService.Add(itinerary);
                 return RedirectToAction(nameof(Index));
             }
             return View(itinerary);
@@ -73,7 +73,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itinerary = await _context.Itineraries.FindAsync(id);
+            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (itinerary == null)
             {
                 return NotFound();
@@ -97,8 +97,7 @@ namespace TravelAgency.Controllers
             {
                 try
                 {
-                    _context.Update(itinerary);
-                    await _context.SaveChangesAsync();
+                    await _itineraryService.Update(itinerary);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,8 +123,8 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itinerary = await _context.Itineraries
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+
             if (itinerary == null)
             {
                 return NotFound();
@@ -139,19 +138,19 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var itinerary = await _context.Itineraries.FindAsync(id);
+            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (itinerary != null)
             {
-                _context.Itineraries.Remove(itinerary);
+                await _itineraryService.DeleteById(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItineraryExists(int id)
         {
-            return _context.Itineraries.Any(e => e.Id == id);
+            return _itineraryService.GetAll().AnyAsync(m => m.Id == id).Result;
+
         }
     }
 }

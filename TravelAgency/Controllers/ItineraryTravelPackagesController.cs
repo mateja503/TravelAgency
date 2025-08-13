@@ -7,23 +7,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
+using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
 {
     public class ItineraryTravelPackagesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public ItineraryTravelPackagesController(ApplicationDbContext context)
+        private readonly IItineraryTravelPackageService _itineraryTravelPackageService;
+        private readonly IItineraryService _itineraryService;
+        private readonly ITravelPackageService _travelPackageService;
+        public ItineraryTravelPackagesController(
+            IItineraryTravelPackageService itineraryTravelPackageService,
+            IItineraryService itineraryService,
+            ITravelPackageService travelPackageService)
         {
-            _context = context;
+            _itineraryTravelPackageService = itineraryTravelPackageService;
+            _itineraryService = itineraryService;
+            _travelPackageService = travelPackageService;
         }
 
         // GET: ItineraryTravelPackages
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ItineraryTravelPackages.Include(i => i.Itinerary).Include(i => i.TravelPackage);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.ItineraryTravelPackages.Include(i => i.Itinerary).Include(i => i.TravelPackage);
+            var applicationDbContext = await _itineraryTravelPackageService.GetAll().Include(u => u.Itinerary).Include(u => u.TravelPackage).ToListAsync();
+            return View(applicationDbContext);
         }
 
         // GET: ItineraryTravelPackages/Details/5
@@ -34,9 +42,9 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itineraryTravelPackage = await _context.ItineraryTravelPackages
-                .Include(i => i.Itinerary)
-                .Include(i => i.TravelPackage)
+            var itineraryTravelPackage = await _itineraryTravelPackageService.GetAll()
+                .Include(u => u.Itinerary)
+                .Include(u => u.TravelPackage)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (itineraryTravelPackage == null)
             {
@@ -47,10 +55,10 @@ namespace TravelAgency.Controllers
         }
 
         // GET: ItineraryTravelPackages/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id");
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description");
+            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackageId"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Description");
             return View();
         }
 
@@ -63,12 +71,11 @@ namespace TravelAgency.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(itineraryTravelPackage);
-                await _context.SaveChangesAsync();
+                await _itineraryTravelPackageService.Add(itineraryTravelPackage);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", itineraryTravelPackage.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", itineraryTravelPackage.TravelPackageId);
+            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackageId"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Description");
             return View(itineraryTravelPackage);
         }
 
@@ -80,13 +87,16 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itineraryTravelPackage = await _context.ItineraryTravelPackages.FindAsync(id);
+            var itineraryTravelPackage = await _itineraryTravelPackageService.GetAll()
+               //.Include(u => u.Itinerary)
+               //.Include(u => u.TravelPackage)
+               .FirstOrDefaultAsync(m => m.Id == id);
             if (itineraryTravelPackage == null)
             {
                 return NotFound();
             }
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", itineraryTravelPackage.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", itineraryTravelPackage.TravelPackageId);
+            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackageId"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Description");
             return View(itineraryTravelPackage);
         }
 
@@ -105,9 +115,8 @@ namespace TravelAgency.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(itineraryTravelPackage);
-                    await _context.SaveChangesAsync();
+                { 
+                    await _itineraryTravelPackageService.Update(itineraryTravelPackage);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,8 +131,8 @@ namespace TravelAgency.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", itineraryTravelPackage.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", itineraryTravelPackage.TravelPackageId);
+            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackageId"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Description");
             return View(itineraryTravelPackage);
         }
 
@@ -135,7 +144,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itineraryTravelPackage = await _context.ItineraryTravelPackages
+            var itineraryTravelPackage = await _itineraryTravelPackageService.GetAll()
                 .Include(i => i.Itinerary)
                 .Include(i => i.TravelPackage)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,19 +161,21 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var itineraryTravelPackage = await _context.ItineraryTravelPackages.FindAsync(id);
+            var itineraryTravelPackage =  await _itineraryTravelPackageService.GetAll()
+               //.Include(u => u.Itinerary)
+               //.Include(u => u.TravelPackage)
+               .FirstOrDefaultAsync(m => m.Id == id);
             if (itineraryTravelPackage != null)
             {
-                _context.ItineraryTravelPackages.Remove(itineraryTravelPackage);
+                await _itineraryTravelPackageService.DeleteById(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ItineraryTravelPackageExists(int id)
         {
-            return _context.ItineraryTravelPackages.Any(e => e.Id == id);
+            return _itineraryTravelPackageService.GetAll().Any(e => e.Id == id);
         }
     }
 }

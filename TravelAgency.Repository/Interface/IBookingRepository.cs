@@ -10,6 +10,6 @@ namespace TravelAgency.Repository.Interface
 {
     public interface IBookingRepository : IGeneralRepository<Booking>
     {
-        public Task<Booking?> Update(int id, Booking item);
+        public Task<Booking?> Update(Booking item);
     }
 }

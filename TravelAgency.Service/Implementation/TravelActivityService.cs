@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,9 +24,9 @@ namespace TravelAgency.Service.Implementation
             return await this._travelActivityRepository.DeleteById(u=>u.Id == id);
         }
 
-        public async Task<List<TravelActivity>> GetAll()
+        public IQueryable<TravelActivity> GetAll()
         {
-            return await this._travelActivityRepository.GetAll();
+            return _travelActivityRepository.GetAll().AsQueryable();
         }
 
         public async  Task<TravelActivity?> GetById(int id)
@@ -33,9 +34,9 @@ namespace TravelAgency.Service.Implementation
             return await this._travelActivityRepository.GetById(u => u.Id == id);
         }
 
-        public async Task<TravelActivity?> Update(int id, TravelActivity item)
+        public async Task<TravelActivity?> Update(TravelActivity item)
         {
-            return await this._travelActivityRepository.Update(id,item);
+            return await this._travelActivityRepository.Update(item);
         }
     }
 }

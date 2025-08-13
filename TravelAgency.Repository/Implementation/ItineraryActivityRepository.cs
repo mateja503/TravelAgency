@@ -20,7 +20,7 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public Task<ItineraryActivity> Update(int id, ItineraryActivity item)
+        public Task<ItineraryActivity> Update(ItineraryActivity item)
         {
             throw new NotImplementedException();
         }

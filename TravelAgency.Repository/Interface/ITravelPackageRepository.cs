@@ -11,7 +11,7 @@ namespace TravelAgency.Repository.Interface
 {
     public interface ITravelPackageRepository : IGeneralRepository<TravelPackage>
     {
-        public Task<TravelPackage> Update(int id, TravelPackage item);
+        public Task<TravelPackage> Update(TravelPackage item);
 
         public Task<TravelPackageDto?> GetTravelPackageForDetail(int id);
     }

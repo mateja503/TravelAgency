@@ -15,7 +15,7 @@ namespace TravelAgency.Controllers
         // GET: TravelPackages
         public async Task<IActionResult> Index()
         {
-            return View(await _travelpackageService.GetAll());
+            return View(await _travelpackageService.GetAll().ToListAsync());
         }
 
         // GET: TravelPackages/Details/5
@@ -107,7 +107,7 @@ namespace TravelAgency.Controllers
             {
                 try
                 {
-                    await _travelpackageService.Update(id, travelPackage);
+                    await _travelpackageService.Update(travelPackage);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -163,6 +163,6 @@ namespace TravelAgency.Controllers
 
         private  bool TravelPackageExists(int id)
         {
-            return _travelpackageService.GetAll().GetAwaiter().GetResult().Any(e => e.Id == id);
+            return _travelpackageService.GetAll().AnyAsync(e => e.Id == id).Result;
         }    }
 }

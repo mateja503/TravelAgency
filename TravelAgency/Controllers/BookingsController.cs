@@ -2,28 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
+using TravelAgency.Repository.Identity;
+using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public BookingsController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IBookingService _bookingService;
+        private readonly IItineraryService _itineraryService;
+        private readonly ITravelPackageService _travelPackageService;
+        public BookingsController(UserManager<ApplicationUser> userManager,
+            IBookingService bookingService, IItineraryService itineraryService, ITravelPackageService travelPackageService)
         {
-            _context = context;
+            _userManager = userManager;
+            _bookingService = bookingService;
+            _itineraryService = itineraryService;
+            _travelPackageService = travelPackageService;
         }
 
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Bookings.Include(b => b.Customer).Include(b => b.Itinerary).Include(b => b.TravelPackage);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Bookings.Include(b => b.Customer).Include(b => b.Itinerary).Include(b => b.TravelPackage);
+            return View( await _bookingService.GetAll().ToListAsync());
         }
 
         // GET: Bookings/Details/5
@@ -34,11 +43,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .Include(b => b.Customer)
-                .Include(b => b.Itinerary)
-                .Include(b => b.TravelPackage)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)
             {
                 return NotFound();
@@ -48,11 +53,12 @@ namespace TravelAgency.Controllers
         }
 
         // GET: Bookings/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id");
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description");
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["Customer"] = user?.Email;
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();
         }
 
@@ -61,17 +67,24 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerId,TravelPackageId,ItineraryId,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id,TravelPackageId,ItineraryId,Status")] Booking booking)
         {
+            var user = new ApplicationUser();
             if (ModelState.IsValid)
             {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
+                user = await _userManager.GetUserAsync(User);
+                if (user == null) 
+                {
+                    return NotFound();
+                }
+                booking.CustomerId = user.CustomerId;
+                await _bookingService.Add(booking);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", booking.CustomerId);
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", booking.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", booking.TravelPackageId);
+
+            ViewData["Customer"] = user?.Email;
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View(booking);
         }
 
@@ -83,14 +96,15 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", booking.CustomerId);
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", booking.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", booking.TravelPackageId);
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["Customer"] = user?.Email;
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View(booking);
         }
 
@@ -105,13 +119,13 @@ namespace TravelAgency.Controllers
             {
                 return NotFound();
             }
-
+            var user = new ApplicationUser();
             if (ModelState.IsValid)
             {
+                user = await _userManager.GetUserAsync(User);
                 try
                 {
-                    _context.Update(booking);
-                    await _context.SaveChangesAsync();
+                    await _bookingService.Update(booking);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,10 +140,9 @@ namespace TravelAgency.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", booking.CustomerId);
-            ViewData["ItineraryId"] = new SelectList(_context.Itineraries, "Id", "Id", booking.ItineraryId);
-            ViewData["TravelPackageId"] = new SelectList(_context.TravelPackages, "Id", "Description", booking.TravelPackageId);
-            return View(booking);
+            ViewData["Customer"] = user?.Email;
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle"); return View(booking);
         }
 
         // GET: Bookings/Delete/5
@@ -140,11 +153,8 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
-                .Include(b => b.Customer)
-                .Include(b => b.Itinerary)
-                .Include(b => b.TravelPackage)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+
             if (booking == null)
             {
                 return NotFound();
@@ -158,19 +168,20 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (booking != null)
             {
-                _context.Bookings.Remove(booking);
+               await _bookingService.DeleteById(id);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookingExists(int id)
         {
-            return _context.Bookings.Any(e => e.Id == id);
+            //return _context.Bookings.Any(e => e.Id == id);
+            return  _bookingService.GetAll().AnyAsync(m => m.Id == id).Result;
+
         }
     }
 }

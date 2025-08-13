@@ -32,10 +32,10 @@ namespace TravelAgency.Repository.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Customer>(entity =>
-            {
-                entity.OwnsOne(c => c.Address);
-            });
+            //modelBuilder.Entity<Customer>(entity =>
+            //{
+            //    entity.OwnsOne(c => c.Address);
+            //});
 
             modelBuilder.Entity<Booking>(entity =>
             {

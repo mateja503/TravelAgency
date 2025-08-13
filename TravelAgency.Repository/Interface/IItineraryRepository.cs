@@ -10,6 +10,6 @@ namespace TravelAgency.Repository.Interface
 {
     public interface IItineraryRepository : IGeneralRepository<Itinerary>
     {
-        public Task<Itinerary> Update(int id, Itinerary item);
+        public Task<Itinerary> Update(Itinerary item);
     }
 }

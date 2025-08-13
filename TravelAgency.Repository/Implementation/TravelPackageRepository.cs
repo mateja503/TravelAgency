@@ -60,7 +60,7 @@ namespace TravelAgency.Repository.Implementation
                  .FirstOrDefaultAsync();
         }
 
-        public Task<TravelPackage> Update(int id, TravelPackage item)
+        public Task<TravelPackage> Update(TravelPackage item)
         {
             throw new NotImplementedException();
         }

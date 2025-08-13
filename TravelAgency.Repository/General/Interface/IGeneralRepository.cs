@@ -10,7 +10,7 @@ namespace TravelAgency.Repository.General.Interface
 {
     public interface IGeneralRepository<T> where T : class
     {
-        Task<List<T>> GetAll();
+        IQueryable<T> GetAll();
 
         Task<T?> GetById(Expression<Func<T, bool>> filter);
 
