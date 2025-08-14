@@ -28,7 +28,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var travelPackage = _travelpackageService.GetAll().Where(u => u.Id == id)
+            var travelPackage = await _travelpackageService.GetAll().Where(u => u.Id == id)
                 .Include(u => u.ItineraryTravelPackage)
                     .ThenInclude(u => u.Itinerary)
                     .ThenInclude(u => u.ItineraryActivities)

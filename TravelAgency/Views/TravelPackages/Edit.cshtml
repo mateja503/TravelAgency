@@ -53,12 +53,11 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <a asp-action="Index" class="btn btn-primary m-1">Back to List</a>
     </div>
+    
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

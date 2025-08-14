@@ -5,8 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body>
 
+
+
+
+<body>
+    
+        <a asp-action="Index" class="btn btn-primary m-2">Back to List</a>
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -24,8 +29,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <span class="breadcrumb"><a asp-controller="Home" asp-action="Index">Home</a>  /  Single TravelPackage</span>
-                    <h3>Single TravelPackage</h3>
+                    <span class="breadcrumb"><a asp-controller="Home" asp-action="Index">Home</a>  /  Details TravelPackage</span>
+                    <h3>Details TravelPackage</h3>
                 </div>
             </div>
         </div>
@@ -125,7 +130,7 @@
 
 </body>
 
-<h1>Details</h1>
+@* <h1>Details</h1>
 
 <div>
     <h4>TravelPackage</h4>
@@ -154,4 +159,4 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
-</div>
+</div> *@
