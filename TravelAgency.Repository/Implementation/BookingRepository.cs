@@ -20,22 +20,9 @@ namespace TravelAgency.Repository.Implementation
 
         public async Task<Booking?> Update(Booking item)
         {
-            var res = await GetById(u => u.Id == item.Id);
-            if (res == null)
-            {
-                return null;
-            }
-
-            res.CustomerId = item.CustomerId;
-            res.TravelPackageId = item.TravelPackageId;
-            res.ItineraryId = item.ItineraryId;
-            res.Status = item.Status;
-            res.DateRange.From = item.DateRange.From;
-            res.DateRange.To = item.DateRange.To;
-
-            _db.Update(res);
+            _db.Update(item);
             await _db.SaveChangesAsync();
-            return res;
+            return item;
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelAgency.Repository.Data;
 
@@ -11,9 +12,11 @@ using TravelAgency.Repository.Data;
 namespace TravelAgency.Repository.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250814194911_AddPropertyNameToTheItinerary")]
+    partial class AddPropertyNameToTheItinerary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +190,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasIndex("TravelPackageId");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.Customer", b =>
@@ -208,7 +211,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.Itinerary", b =>
@@ -225,7 +228,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Itineraries", (string)null);
+                    b.ToTable("Itineraries");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.ItineraryActivity", b =>
@@ -248,7 +251,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasIndex("TravelActivityId");
 
-                    b.ToTable("ItineraryActivities", (string)null);
+                    b.ToTable("ItineraryActivities");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.ItineraryTravelPackage", b =>
@@ -271,7 +274,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasIndex("TravelPackageId");
 
-                    b.ToTable("ItineraryTravelPackages", (string)null);
+                    b.ToTable("ItineraryTravelPackages");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.TravelActivity", b =>
@@ -291,7 +294,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TravelActivities", (string)null);
+                    b.ToTable("TravelActivities");
                 });
 
             modelBuilder.Entity("TravelAgency.Domain.Models.TravelPackage", b =>
@@ -315,7 +318,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TravelPackages", (string)null);
+                    b.ToTable("TravelPackages");
                 });
 
             modelBuilder.Entity("TravelAgency.Repository.Identity.ApplicationUser", b =>
@@ -455,7 +458,7 @@ namespace TravelAgency.Repository.Data.Migrations
                         .WithMany()
                         .HasForeignKey("TravelPackageId");
 
-                    b.OwnsOne("TravelAgency.Domain.Models.Booking.DateRange#TravelAgency.Domain.ValueObjects.DateRange", "DateRange", b1 =>
+                    b.OwnsOne("TravelAgency.Domain.ValueObjects.DateRange", "DateRange", b1 =>
                         {
                             b1.Property<int>("BookingId")
                                 .HasColumnType("int");
@@ -468,7 +471,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                             b1.HasKey("BookingId");
 
-                            b1.ToTable("Bookings", (string)null);
+                            b1.ToTable("Bookings");
 
                             b1.WithOwner()
                                 .HasForeignKey("BookingId");
@@ -524,7 +527,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
             modelBuilder.Entity("TravelAgency.Domain.Models.TravelPackage", b =>
                 {
-                    b.OwnsOne("TravelAgency.Domain.Models.TravelPackage.DateRange#TravelAgency.Domain.ValueObjects.DateRange", "DateRange", b1 =>
+                    b.OwnsOne("TravelAgency.Domain.ValueObjects.DateRange", "DateRange", b1 =>
                         {
                             b1.Property<int>("TravelPackageId")
                                 .HasColumnType("int");
@@ -537,13 +540,13 @@ namespace TravelAgency.Repository.Data.Migrations
 
                             b1.HasKey("TravelPackageId");
 
-                            b1.ToTable("TravelPackages", (string)null);
+                            b1.ToTable("TravelPackages");
 
                             b1.WithOwner()
                                 .HasForeignKey("TravelPackageId");
                         });
 
-                    b.OwnsOne("TravelAgency.Domain.Models.TravelPackage.Price#TravelAgency.Domain.ValueObjects.Price", "Price", b1 =>
+                    b.OwnsOne("TravelAgency.Domain.ValueObjects.Price", "Price", b1 =>
                         {
                             b1.Property<int>("TravelPackageId")
                                 .HasColumnType("int");
@@ -556,7 +559,7 @@ namespace TravelAgency.Repository.Data.Migrations
 
                             b1.HasKey("TravelPackageId");
 
-                            b1.ToTable("TravelPackages", (string)null);
+                            b1.ToTable("TravelPackages");
 
                             b1.WithOwner()
                                 .HasForeignKey("TravelPackageId");

@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
 using TravelAgency.Repository.Identity;
+using TravelAgency.Service.Implementation;
 using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
@@ -19,20 +20,28 @@ namespace TravelAgency.Controllers
         private readonly IBookingService _bookingService;
         private readonly IItineraryService _itineraryService;
         private readonly ITravelPackageService _travelPackageService;
+        private readonly ICustomerService _customerService;
         public BookingsController(UserManager<ApplicationUser> userManager,
-            IBookingService bookingService, IItineraryService itineraryService, ITravelPackageService travelPackageService)
+            IBookingService bookingService, IItineraryService itineraryService,
+            ITravelPackageService travelPackageService, ICustomerService customerService)
         {
             _userManager = userManager;
             _bookingService = bookingService;
             _itineraryService = itineraryService;
             _travelPackageService = travelPackageService;
+            _customerService = customerService;
         }
 
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.Bookings.Include(b => b.Customer).Include(b => b.Itinerary).Include(b => b.TravelPackage);
-            return View( await _bookingService.GetAll().ToListAsync());
+            var applicationDbContext = await _bookingService.GetAll()
+                .Include(b => b.Customer)
+                .Include(b => b.Itinerary)
+                .Include(b => b.TravelPackage)
+                .ToListAsync();
+
+            return View(applicationDbContext);
         }
 
         // GET: Bookings/Details/5
@@ -55,8 +64,8 @@ namespace TravelAgency.Controllers
         // GET: Bookings/Create
         public async Task<IActionResult> Create()
         {
-            var user = await _userManager.GetUserAsync(User);
-            ViewData["Customer"] = user?.Email;
+            //var user = await _userManager.GetUserAsync(User);
+            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
             ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
             ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();

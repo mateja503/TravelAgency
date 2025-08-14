@@ -12,13 +12,13 @@ namespace TravelAgency.Domain.DTOs
     public record TravelPackageDto
     {
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Tittle { get; init; }
-        public string Description { get; init; }
-        public int Capacity { get; init; }
-        public PriceDto Price { get; init; }
-        public DateRangeDto DateRange { get; init; }
-        public List<TravelActivityDto> TravelActivitiesList { get; init; }
+        public string? Description { get; init; }
+        public int? Capacity { get; init; }
+        public PriceDto? Price { get; init; }
+        public DateRangeDto? DateRange { get; init; }
+        public List<TravelActivityDto>? TravelActivitiesList { get; init; }
     } 
     public record TravelActivityDto 
     {

@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
+using TravelAgency.Service.Implementation;
 using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
@@ -14,10 +16,16 @@ namespace TravelAgency.Controllers
     public class ItinerariesController : Controller
     {
         private readonly IItineraryService _itineraryService;
-
-        public ItinerariesController(ApplicationDbContext context, IItineraryService itineraryService)
+        private readonly ITravelActivityService _travelActivityService;
+        private readonly ITravelPackageService _travelPackageService;
+        public ItinerariesController(ApplicationDbContext context,
+            IItineraryService itineraryService,
+            ITravelActivityService travelActivityService,
+            ITravelPackageService travelPackageService)
         {
             _itineraryService = itineraryService;
+            _travelActivityService = travelActivityService;
+            _travelPackageService = travelPackageService;
         }
 
         // GET: Itineraries
@@ -45,8 +53,11 @@ namespace TravelAgency.Controllers
         }
 
         // GET: Itineraries/Create
-        public IActionResult Create()
-        {
+        public async Task<IActionResult> Create()
+        { 
+            ViewData["TravelActivity"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
+
             return View();
         }
 
@@ -55,14 +66,17 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Itinerary itinerary)
+        public async Task<IActionResult> Create([Bind("Name", "SelectedTravelPackageId", "SelectedActivityId")] Itinerary itinerary)
         {
-            if (ModelState.IsValid)
+
+            if (!string.IsNullOrEmpty(itinerary.Name) && itinerary.SelectedTravelPackageId != 0 && itinerary.SelectedActivityId != 0) 
             {
                 await _itineraryService.Add(itinerary);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(itinerary);
+           
         }
 
         // GET: Itineraries/Edit/5
@@ -72,8 +86,31 @@ namespace TravelAgency.Controllers
             {
                 return NotFound();
             }
+            var itinerary = await _itineraryService.GetAll()
+                .Where(m => m.Id == id)
+               .Include(u => u.ItineraryTravelPackage)
+               .ThenInclude(t => t.TravelPackage)
+               .Include(u => u.ItineraryActivities)
+               .ThenInclude(t => t.TravelActivity)
+               .Select(u => new ItineraryDto()
+               {
+                   Name = u.Name,
+                   TravelActivities = u.ItineraryActivities
+                       .Select(u => new TravelActivityDto()
+                       {
+                           ActivityName = u.TravelActivity.ActivityName,
+                           SeasonType = u.TravelActivity.SeasonType
+                       }).ToList(),
+                   TravelPackages = u.ItineraryTravelPackage
+                       .Select(u => new TravelPackageDto()
+                       {
+                           Tittle = u.TravelPackage.Tittle,
+                       }).ToList()
+               }
+               )
+               .FirstOrDefaultAsync();
 
-            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+            //var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
             if (itinerary == null)
             {
                 return NotFound();
