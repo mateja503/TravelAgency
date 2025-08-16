@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TravelAgency.Domain.Models.Itinerary>
+﻿@model IEnumerable<TravelAgency.Domain.DTOs.ItineraryDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,12 +14,17 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.TravelPackage)</th>
+            <th>@Html.DisplayNameFor(model => model.TravelActivity)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td> @Html.DisplayFor(modelItem => item.Name) </td>
+            <td> @Html.DisplayFor(modelItem => item.TravelPackage.Tittle) </td>
+            <td> @Html.DisplayFor(modelItem => item.TravelActivity.ActivityName) </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

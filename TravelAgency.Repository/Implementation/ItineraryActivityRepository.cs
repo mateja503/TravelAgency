@@ -20,9 +20,11 @@ namespace TravelAgency.Repository.Implementation
             _db = db;
         }
 
-        public Task<ItineraryActivity> Update(ItineraryActivity item)
+        public async Task<ItineraryActivity> Update(ItineraryActivity item)
         {
-            throw new NotImplementedException();
+            _db.ItineraryActivities.Update(item);
+            await _db.SaveChangesAsync();
+            return item;
         }
     }
 }

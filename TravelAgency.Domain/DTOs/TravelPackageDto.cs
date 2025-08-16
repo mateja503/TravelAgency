@@ -22,6 +22,7 @@ namespace TravelAgency.Domain.DTOs
     } 
     public record TravelActivityDto 
     {
+        public int? Id { get; set; }
         public SeasonType SeasonType { get; set; }
         public string ActivityName { get; set; }
     }

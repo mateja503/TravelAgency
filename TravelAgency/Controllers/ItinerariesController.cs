@@ -18,20 +18,57 @@ namespace TravelAgency.Controllers
         private readonly IItineraryService _itineraryService;
         private readonly ITravelActivityService _travelActivityService;
         private readonly ITravelPackageService _travelPackageService;
+        private readonly IItineraryActivityService _itineraryActivityService;
+        private readonly IItineraryTravelPackageService _itineraryTravelPackageService;
+    
+       
         public ItinerariesController(ApplicationDbContext context,
             IItineraryService itineraryService,
             ITravelActivityService travelActivityService,
-            ITravelPackageService travelPackageService)
+            ITravelPackageService travelPackageService,
+            IItineraryActivityService itineraryActivityService,
+            IItineraryTravelPackageService itineraryTravelPackageService
+
+            )
         {
             _itineraryService = itineraryService;
             _travelActivityService = travelActivityService;
             _travelPackageService = travelPackageService;
+            _itineraryActivityService = itineraryActivityService;
+            _itineraryTravelPackageService = itineraryTravelPackageService;
+
+
+
         }
 
         // GET: Itineraries
         public async Task<IActionResult> Index()
         {
-            return View(await _itineraryService.GetAll().ToListAsync());
+            var itineraries = await _itineraryService.GetAll()
+             .Include(u => u.ItineraryTravelPackage)
+             .ThenInclude(t => t.TravelPackage)
+             .Include(u => u.ItineraryActivities)
+             .ThenInclude(t => t.TravelActivity)
+             .Select(u => new ItineraryDto()
+             {
+                 Id = u.Id,
+                 Name = u.Name,
+                 TravelPackage = new TravelPackageDto()
+                 {
+                     Id = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Id).First(),
+                     Tittle = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Tittle).First()
+                 },
+                 TravelActivity = new TravelActivityDto()
+                 {
+                     Id = u.ItineraryActivities.Select(t => t.TravelActivity.Id).First(),
+                     ActivityName = u.ItineraryActivities.Select(t => t.TravelActivity.ActivityName).First(),
+                     SeasonType = u.ItineraryActivities.Select(t => t.TravelActivity.SeasonType).First()
+                 }
+             }
+             )
+             .ToListAsync();
+
+            return View(itineraries);
         }
 
         // GET: Itineraries/Details/5
@@ -42,12 +79,36 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+            var itinerary = await _itineraryService.GetAll()
+               .Where(m => m.Id == id)
+              .Include(u => u.ItineraryTravelPackage)
+              .ThenInclude(t => t.TravelPackage)
+              .Include(u => u.ItineraryActivities)
+              .ThenInclude(t => t.TravelActivity)
+              .Select(u => new ItineraryDto()
+              {
+                  Id = u.Id,
+                  Name = u.Name,
+                  TravelPackage = new TravelPackageDto()
+                  {
+                      Id = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Id).First(),
+                      Tittle = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Tittle).First()
+                  },
+                  TravelActivity = new TravelActivityDto()
+                  {
+                      Id = u.ItineraryActivities.Select(t => t.TravelActivity.Id).First(),
+                      ActivityName = u.ItineraryActivities.Select(t => t.TravelActivity.ActivityName).First(),
+                      SeasonType = u.ItineraryActivities.Select(t => t.TravelActivity.SeasonType).First()
+                  }
+              }
+              )
+              .FirstOrDefaultAsync();
 
             if (itinerary == null)
             {
                 return NotFound();
             }
+
 
             return View(itinerary);
         }
@@ -94,27 +155,35 @@ namespace TravelAgency.Controllers
                .ThenInclude(t => t.TravelActivity)
                .Select(u => new ItineraryDto()
                {
+                   Id = u.Id,
                    Name = u.Name,
-                   TravelActivities = u.ItineraryActivities
-                       .Select(u => new TravelActivityDto()
-                       {
-                           ActivityName = u.TravelActivity.ActivityName,
-                           SeasonType = u.TravelActivity.SeasonType
-                       }).ToList(),
-                   TravelPackages = u.ItineraryTravelPackage
-                       .Select(u => new TravelPackageDto()
-                       {
-                           Tittle = u.TravelPackage.Tittle,
-                       }).ToList()
+                   SelectedTravelPackageId = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Id).First(),
+                   ItineraryTravelPackageId = u.ItineraryTravelPackage.Select(t => t.Id).First(),
+                   TravelPackage = new TravelPackageDto()
+                   {
+                       Id = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Id).First(),
+                       Tittle = u.ItineraryTravelPackage.Select(t => t.TravelPackage.Tittle).First()
+                   },
+                   SelectedActivityId = u.ItineraryActivities.Select(t => t.TravelActivity.Id).First(),
+                   ItineraryActivityId = u.ItineraryActivities.Select(t => t.Id).First(),
+                   TravelActivity = new TravelActivityDto()
+                   {
+                       Id = u.ItineraryActivities.Select(t => t.TravelActivity.Id).First(),
+                       ActivityName = u.ItineraryActivities.Select(t => t.TravelActivity.ActivityName).First(),
+                       SeasonType = u.ItineraryActivities.Select(t => t.TravelActivity.SeasonType).First()
+                   }
                }
                )
                .FirstOrDefaultAsync();
 
-            //var itinerary = await _itineraryService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+
             if (itinerary == null)
             {
                 return NotFound();
             }
+            ViewData["TravelActivity"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
+            
             return View(itinerary);
         }
 
@@ -123,7 +192,7 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Itinerary itinerary)
+        public async Task<IActionResult> Edit(int id,int itineraryActivityId,int ItineraryTravelPackageId, [Bind("Id","Name", "SelectedTravelPackageId", "SelectedActivityId")] Itinerary itinerary)
         {
             if (id != itinerary.Id)
             {
@@ -135,6 +204,18 @@ namespace TravelAgency.Controllers
                 try
                 {
                     await _itineraryService.Update(itinerary);
+                    await _itineraryTravelPackageService.Update(new ItineraryTravelPackage 
+                    {
+                        Id = ItineraryTravelPackageId,
+                        TravelPackageId = itinerary.SelectedTravelPackageId,
+                        ItineraryId = id
+                    });
+                    await _itineraryActivityService.Update(new ItineraryActivity
+                    {
+                        Id = itineraryActivityId,
+                        TravelActivityId = itinerary.SelectedActivityId,
+                        ItineraryId = id
+                    });
                 }
                 catch (DbUpdateConcurrencyException)
                 {

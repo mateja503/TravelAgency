@@ -1,4 +1,4 @@
-﻿@model TravelAgency.Domain.Models.Itinerary
+﻿@model TravelAgency.Domain.DTOs.ItineraryDto
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,14 +12,39 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ItineraryActivityId" />
+            <input type="hidden" asp-for="ItineraryTravelPackageId"/>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TravelPackages" class="control-label"></label>
+                <select asp-for="SelectedTravelPackageId" class="form-control" asp-items="ViewBag.TravelPackage">
+                    <option value=0>-- Select a package--</option>
+                </select>
+                <span asp-validation-for="TravelPackages" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TravelActivities" class="control-label"></label>
+                <select asp-for="SelectedActivityId" class=" form-control" asp-items="ViewBag.TravelActivity">
+                    <option value=0>-- Select an activity --</option>
+                </select>
+                <span asp-validation-for="TravelActivities" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

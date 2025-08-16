@@ -1,4 +1,4 @@
-﻿@model TravelAgency.Domain.Models.Itinerary
+﻿@model TravelAgency.Domain.DTOs.ItineraryDto
 
 @{
     ViewData["Title"] = "Details";
@@ -11,6 +11,30 @@
     <h4>Itinerary</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TravelPackage.Tittle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TravelPackage.Tittle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TravelActivity.ActivityName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TravelActivity.ActivityName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TravelActivity.SeasonType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TravelActivity.SeasonType)
+        </dd>
     </dl>
 </div>
 <div>
