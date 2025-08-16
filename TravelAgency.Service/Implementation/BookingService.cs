@@ -30,7 +30,7 @@ namespace TravelAgency.Service.Implementation
             return _bookingRepository.GetAll()
                 .Include(u=>u.Customer)
                 .Include(u=>u.Itinerary)
-                .Include(u=>u.TravelPackage).AsQueryable();
+                .AsQueryable();
         }
 
         public async Task<Booking?> GetById(int id)

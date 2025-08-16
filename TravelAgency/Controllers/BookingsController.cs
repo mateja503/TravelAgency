@@ -38,7 +38,6 @@ namespace TravelAgency.Controllers
             var applicationDbContext = await _bookingService.GetAll()
                 .Include(b => b.Customer)
                 .Include(b => b.Itinerary)
-                .Include(b => b.TravelPackage)
                 .ToListAsync();
 
             return View(applicationDbContext);
@@ -66,7 +65,7 @@ namespace TravelAgency.Controllers
         {
             //var user = await _userManager.GetUserAsync(User);
             ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
-            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
             ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();
         }
@@ -76,22 +75,16 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TravelPackageId,ItineraryId,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id,CustomerId,ItineraryId,DateRange,Status")] Booking booking)
         {
-            var user = new ApplicationUser();
             if (ModelState.IsValid)
             {
-                user = await _userManager.GetUserAsync(User);
-                if (user == null) 
-                {
-                    return NotFound();
-                }
-                booking.CustomerId = user.CustomerId;
+                
                 await _bookingService.Add(booking);
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["Customer"] = user?.Email;
+            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
             ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
             ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View(booking);
@@ -105,7 +98,10 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+            var booking = await _bookingService.GetAll()
+                .Include(u=>u.Customer)
+                .Include(u=>u.Itinerary).FirstOrDefaultAsync(m => m.Id == id);
+
             if (booking == null)
             {
                 return NotFound();

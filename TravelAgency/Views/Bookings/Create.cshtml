@@ -1,4 +1,5 @@
-﻿@model TravelAgency.Domain.Models.Booking
+﻿@using TravelAgency.Domain.Shared
+@model TravelAgency.Domain.Models.Booking
 
 @{
     ViewData["Title"] = "Create";
@@ -14,21 +15,27 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" style="padding: 10px">
-                <label asp-for="CustomerId" class="control-label"></label>
+                <label asp-for="Customer.FullName" class="control-label"></label>
                 <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.Customers"></select>
                 <span asp-validation-for="CustomerId" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding: 10px">
-                <label asp-for="TravelPackageId" class="control-label"></label>
-                <select asp-for="TravelPackageId" class ="form-control" asp-items="ViewBag.TravelPackage"></select>
-            </div>
-            <div class="form-group" style="padding: 10px">
-                <label asp-for="ItineraryId" class="control-label"></label>
+                <label class="control-label">Itinerary Name</label>
                 <select asp-for="ItineraryId" class ="form-control" asp-items="ViewBag.Itinerary"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateRange.From" class="control-label"></label>
+                <input asp-for="DateRange.From" class="form-control" />
+                <span asp-validation-for="DateRange.From" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateRange.To" class="control-label"></label>
+                <input asp-for="DateRange.To" class="form-control" />
+                <span asp-validation-for="DateRange.To" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding: 10px">
                 <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<BookingStatus>()"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding: 10px">
