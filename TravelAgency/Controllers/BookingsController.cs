@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ using TravelAgency.Service.Interface;
 
 namespace TravelAgency.Controllers
 {
+
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -75,9 +78,10 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerId,ItineraryId,DateRange,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id,CustomerId,ItineraryId,Capacity,DateRange,Status")] Booking booking)
         {
-                await _bookingService.Add(booking);
+
+             await _bookingService.Add(booking);
             return RedirectToAction(nameof(Index));
         }
 

@@ -16,6 +16,9 @@ namespace TravelAgency.Domain.Models
         public int Id { get; set; }
         public Customer? Customer { get; set; }
         public int CustomerId { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Capacity must be greater than 0.")]
+        public int Capacity { get; set; }
         public Itinerary? Itinerary { get; set; }
         public int ItineraryId { get; set; }
         public BookingStatus Status { get; set; }

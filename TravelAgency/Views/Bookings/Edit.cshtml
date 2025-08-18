@@ -26,6 +26,11 @@
                 <span asp-validation-for="ItineraryId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="DateRange.From" class="control-label"></label>
                 <input asp-for="DateRange.From" type="date" class="form-control" />
                 <span asp-validation-for="DateRange.From" class="text-danger"></span>
