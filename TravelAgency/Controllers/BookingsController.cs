@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TravelAgency.Domain.Models;
 using TravelAgency.Repository.Data;
@@ -38,10 +39,24 @@ namespace TravelAgency.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = await _bookingService.GetAll()
+            var currentUser = await _userManager.GetUserAsync(User);
+            bool isAdmin = false;
+            if (await _userManager.IsInRoleAsync(currentUser!, "Admin"))
+            {
+                isAdmin = true;
+            }
+
+            var query = _bookingService.GetAll()
                 .Include(b => b.Customer)
                 .Include(b => b.Itinerary)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (!isAdmin) 
+            {
+                query = query.Where(u => u.CustomerId == currentUser!.CustomerId);
+            }
+
+            var applicationDbContext = await query.ToListAsync();
 
             return View(applicationDbContext);
         }
@@ -67,7 +82,7 @@ namespace TravelAgency.Controllers
         public async Task<IActionResult> Create()
         {
             //var user = await _userManager.GetUserAsync(User);
-            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
+            //ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
             ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
             ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();
@@ -78,10 +93,11 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerId,ItineraryId,Capacity,DateRange,Status")] Booking booking)
+        public async Task<IActionResult> Create([Bind("Id,ItineraryId,Capacity,DateRange,Status")] Booking booking)
         {
-
-             await _bookingService.Add(booking);
+            var currentUser = await _userManager.GetUserAsync(User);
+            booking.CustomerId = currentUser!.CustomerId;
+            await _bookingService.Add(booking);
             return RedirectToAction(nameof(Index));
         }
 
@@ -102,7 +118,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
             //var user = await _userManager.GetUserAsync(User);
-            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
+            //ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
             ViewData["Itineraries"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
             return View(booking);
         }
