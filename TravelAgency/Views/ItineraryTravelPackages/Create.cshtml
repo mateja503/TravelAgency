@@ -14,12 +14,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TravelPackageId" class="control-label"></label>
-                <select asp-for="TravelPackageId" class ="form-control" asp-items="ViewBag.TravelPackageId"></select>
+                <label asp-for="TravelPackageId" class="control-label">TravelPackage</label>
+                <select asp-for="TravelPackageId" class="form-control" asp-items="ViewBag.TravelPackages">
+                    <option selected value="0">---SelectTravelPackage---</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="ItineraryId" class="control-label"></label>
-                <select asp-for="ItineraryId" class ="form-control" asp-items="ViewBag.ItineraryId"></select>
+                <label asp-for="ItineraryId" class="control-label">Itinerary</label>
+                <select asp-for="ItineraryId" class="form-control" asp-items="ViewBag.Itineraries">
+                    <option selected value="0">---SelectItineray---</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

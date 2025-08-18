@@ -77,17 +77,8 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CustomerId,ItineraryId,DateRange,Status")] Booking booking)
         {
-            if (ModelState.IsValid)
-            {
-                
                 await _bookingService.Add(booking);
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
-            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
-            return View(booking);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Bookings/Edit/5
@@ -106,10 +97,9 @@ namespace TravelAgency.Controllers
             {
                 return NotFound();
             }
-            var user = await _userManager.GetUserAsync(User);
-            ViewData["Customer"] = user?.Email;
-            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
+            //var user = await _userManager.GetUserAsync(User);
+            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
+            ViewData["Itineraries"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
             return View(booking);
         }
 
@@ -118,16 +108,14 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,TravelPackageId,ItineraryId,Status")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,ItineraryId,DateRange,Status")] Booking booking)
         {
             if (id != booking.Id)
             {
                 return NotFound();
             }
-            var user = new ApplicationUser();
             if (ModelState.IsValid)
             {
-                user = await _userManager.GetUserAsync(User);
                 try
                 {
                     await _bookingService.Update(booking);
@@ -145,9 +133,9 @@ namespace TravelAgency.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Customer"] = user?.Email;
-            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle"); return View(booking);
+            ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(), "Id", "FullName");
+            ViewData["Itineraries"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            return View(booking);
         }
 
         // GET: Bookings/Delete/5

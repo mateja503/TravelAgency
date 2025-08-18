@@ -31,10 +31,10 @@
 </body>
 
 
-<h1>Index</h1>
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary m-2">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -52,10 +52,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TravelPackage.Description)
+                @Html.DisplayFor(modelItem => item.TravelPackage.Tittle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Itinerary.Id)
+                @Html.DisplayFor(modelItem => item.Itinerary.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

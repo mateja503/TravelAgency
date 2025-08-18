@@ -13,7 +13,7 @@ namespace TravelAgency.Domain.DTOs
     {
 
         public int? Id { get; set; }
-        public string Tittle { get; init; }
+        public string? Tittle { get; init; }
         public string? Description { get; init; }
         public int? Capacity { get; init; }
         public PriceDto? Price { get; init; }
@@ -24,7 +24,7 @@ namespace TravelAgency.Domain.DTOs
     {
         public int? Id { get; set; }
         public SeasonType SeasonType { get; set; }
-        public string ActivityName { get; set; }
+        public string? ActivityName { get; set; }
     }
 
 

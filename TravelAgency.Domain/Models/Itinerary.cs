@@ -14,12 +14,14 @@ namespace TravelAgency.Domain.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<ItineraryActivity> ItineraryActivities { get; set; } = new List<ItineraryActivity>();
-        public List<ItineraryTravelPackage> ItineraryTravelPackage { get; set; } = new List<ItineraryTravelPackage>(); 
+        public List<ItineraryActivity>? ItineraryActivities { get; set; } = new List<ItineraryActivity>();
+        public List<ItineraryTravelPackage>? ItineraryTravelPackage { get; set; } = new List<ItineraryTravelPackage>(); 
 
         [NotMapped]
-        public int SelectedTravelPackageId { get; set; }
+        [Required(ErrorMessage = "Please select a travel package")]
+        public int? SelectedTravelPackageId { get; set; }
         [NotMapped]
-        public int SelectedActivityId { get; set; }
+        [Required(ErrorMessage = "Please select an activity")]
+        public int? SelectedActivityId { get; set; }
     }
 }

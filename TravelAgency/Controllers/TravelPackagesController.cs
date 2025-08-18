@@ -85,8 +85,6 @@ namespace TravelAgency.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TravelPackageViewModel model)
         {
-            if (ModelState.IsValid)
-            {
                 var travelPackage = new TravelPackage
                 {
                     Tittle = model.Tittle,
@@ -106,8 +104,7 @@ namespace TravelAgency.Controllers
                 };
                 await _travelpackageService.Add(travelPackage);
                 return RedirectToAction(nameof(Index));
-            }
-            return View(model);
+            
         }
 
         // GET: TravelPackages/Edit/5

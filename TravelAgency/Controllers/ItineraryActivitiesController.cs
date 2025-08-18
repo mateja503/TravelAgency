@@ -54,8 +54,8 @@ namespace TravelAgency.Controllers
         // GET: ItineraryActivities/Create
         public async Task<IActionResult> Create()
         {
-            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelActivityId"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["Itineraryies"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            ViewData["TravelActivities"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
             return View();
         }
 
@@ -64,16 +64,16 @@ namespace TravelAgency.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TravelActivityId,ItineraryId")] ItineraryActivity itineraryActivity)
+        public async Task<IActionResult> Create([Bind("TravelActivityId,ItineraryId")] ItineraryActivity itineraryActivity)
         {
-            if (ModelState.IsValid)
+            if (itineraryActivity.TravelActivityId != 0 && itineraryActivity.ItineraryId != 0)
             {
               
                 await _itineraryActivityService.Add(itineraryActivity);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelActivityId"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["Itineraryies"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            ViewData["TravelActivities"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
             return View(itineraryActivity);
         }
 
@@ -85,13 +85,13 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            var itineraryActivity = await _itineraryActivityService.GetAll().FirstOrDefaultAsync(u=>u.ItineraryId == id);
+            var itineraryActivity = await _itineraryActivityService.GetAll().FirstOrDefaultAsync(u=>u.Id == id);
             if (itineraryActivity == null)
             {
                 return NotFound();
             }
-            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelActivityId"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["Itineraries"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            ViewData["TravelActivities"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
             return View(itineraryActivity);
         }
 
@@ -107,7 +107,7 @@ namespace TravelAgency.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (itineraryActivity.TravelActivityId != 0 && itineraryActivity.ItineraryId != 0)
             {
                 try
                 {
@@ -127,8 +127,8 @@ namespace TravelAgency.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItineraryId"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Id");
-            ViewData["TravelActivityId"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
+            ViewData["Itineraries"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            ViewData["TravelActivities"] = new SelectList(await _travelActivityService.GetAll().ToListAsync(), "Id", "ActivityName");
             return View(itineraryActivity);
         }
 

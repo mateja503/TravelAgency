@@ -17,7 +17,7 @@ namespace TravelAgency.Domain.Models
         public Customer? Customer { get; set; }
         public int CustomerId { get; set; }
         public Itinerary? Itinerary { get; set; }
-        public int? ItineraryId { get; set; }
+        public int ItineraryId { get; set; }
         public BookingStatus Status { get; set; }
         public DateRange DateRange { get; set; }
     }

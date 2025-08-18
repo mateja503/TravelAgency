@@ -21,9 +21,9 @@ namespace TravelAgency.Service.Implementation
         {
             await this._itineraryRepository.Add(item);
 
-            await _itineraryActivityRepository.Add(new ItineraryActivity { ItineraryId = item.Id, TravelActivityId = item.SelectedActivityId });
+            await _itineraryActivityRepository.Add(new ItineraryActivity { ItineraryId = item.Id, TravelActivityId = item.SelectedActivityId ?? 0});
 
-            await _itineraryTravelPackageRepostitory.Add(new ItineraryTravelPackage { ItineraryId = item.Id, TravelPackageId = item.SelectedTravelPackageId });
+            await _itineraryTravelPackageRepostitory.Add(new ItineraryTravelPackage { ItineraryId = item.Id, TravelPackageId = item.SelectedTravelPackageId ?? 0 });
            
             return item;
         }
