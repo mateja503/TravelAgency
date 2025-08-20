@@ -22,7 +22,6 @@
         <div class="container">
             <div class="row">
                 <div class="icon-button">
-                    <a asp-controller="Bookings" asp-action="Create"><i class="fa fa-calendar"></i> Schedule a booking</a>
                 </div>
                 <div class="col-lg-8 col-md-8">
                     <ul class="info">
@@ -66,7 +65,7 @@
                 <div class="col-lg-4">
                     <div class="left-image">
                         <img src="~/images/featured.jpg" alt="">
-                        <a href="property-details.html"><img src="~/images/featured-icon.png" alt="" style="max-width: 60px; padding: 0px;"></a>
+                        <img src="~/images/featured-icon.png" alt="" style="max-width: 60px; padding: 0px;">
                     </div>
                 </div>
                 <div class="col-lg-5">
@@ -188,7 +187,15 @@
                                                 <br><br>When you need free CSS templates, you can simply type TemplateMo in any search engine website. In addition, you can type TemplateMo Portfolio, TemplateMo One Page Layouts, etc.
                                             </p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <a asp-controller="Bookings" asp-action="Create"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-calendar"></i> Schedule a booking</a>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +220,15 @@
                                             <h4>Detail Info About Villa</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <a asp-controller="Bookings" asp-action="Create"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-calendar"></i> Schedule a booking</a>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -238,7 +253,15 @@
                                             <h4>Extra Info About Penthouse</h4>
                                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
                                             <div class="icon-button">
-                                                <a href="property-details.html"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <a asp-controller="Bookings" asp-action="Create"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-calendar"></i> Schedule a booking</a>
+
+                                                }
                                             </div>
                                         </div>
                                     </div>

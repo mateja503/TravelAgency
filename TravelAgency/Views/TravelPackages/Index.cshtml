@@ -46,7 +46,10 @@
                 </li>
             </ul> *@
             <p>
-                <a asp-action="Create" class="btn btn-primary m-2">Create New</a>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <a asp-action="Create" class="btn btn-primary m-2">Create New</a>
+                }
             </p>
                 <div class="row properties-box">
                 @foreach (var item in Model)
@@ -66,12 +69,22 @@
                                 <li>To: <span>@item.DateRange.To.ToLongDateString()</span></li>
                             </ul>
                             <div class="main-button">
-                                <a href="property-details.html">Schedule a booking</a>
+                                @if(User.Identity.IsAuthenticated && User.IsInRole("Customer"))
+                                {
+                                    <a asp-controller="Bookings" asp-action="Creatre">Schedule a booking</a>
+                                }else if(!User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-area="Identity" asp-page="/Account/Login">Schedule a booking</a>
+
+                                }
                             </div>
                             <div class="main-button pt-1">
-                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                }
 
                             </div>
                                                       

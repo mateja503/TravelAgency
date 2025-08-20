@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.DTOs;
@@ -73,6 +74,7 @@ namespace TravelAgency.Controllers
         }
 
         // GET: TravelPackages/Create
+        [Authorize("Admin")]
         public IActionResult Create()
         {
             return View();

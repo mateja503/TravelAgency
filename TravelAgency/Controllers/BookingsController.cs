@@ -83,7 +83,7 @@ namespace TravelAgency.Controllers
         {
             //var user = await _userManager.GetUserAsync(User);
             //ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
-            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            ViewData["Itinerary"] = await _itineraryService.GetAll().Include(u=>u.ItineraryTravelPackage).ThenInclude(u=>u.TravelPackage).ToListAsync();
             ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();
         }
@@ -98,6 +98,9 @@ namespace TravelAgency.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
             booking.CustomerId = currentUser!.CustomerId;
             await _bookingService.Add(booking);
+
+
+
             return RedirectToAction(nameof(Index));
         }
 

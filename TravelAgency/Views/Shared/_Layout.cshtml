@@ -34,27 +34,53 @@
         <div class="container" style="display: contents">
             <div class="row">
                 <div class="col-12">
-                    <nav class="main-nav">
+                    <nav class="main-nav" style="display: inline-flex">
                         <!-- ***** Logo Start ***** -->
-                        @* <a asp-controller="Home" asp-action="Index" class="logo">
+                        <a asp-controller="Home" asp-action="Index" class="logo" style="padding-left: 1vw" >
                             <h1>Villa</h1>
-                        </a> *@
+                        </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li><a asp-controller="Home" asp-action="Index" class="active">Home</a></li>
                             <li><a asp-controller="TravelPackages" asp-action="Index">TravelPackages</a></li>
-                            <li><a asp-controller="TravelActivities" asp-action="Index">TravelActivities</a></li>
-                            <li><a asp-controller="Bookings" asp-action="Index">Bookings</a></li>
-                            <li><a asp-controller="Itineraries" asp-action="Index">Itineraries</a></li>
-                            <li><a asp-controller="ItineraryActivities" asp-action="Index">ItineraryActivities</a></li>
-                            <li><a asp-controller="ItineraryTravelPackages" asp-action="Index">ItineraryTravelPackages</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a asp-controller="Bookings" asp-action="Index">Bookings</a></li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a asp-area="Identity" asp-page="/Account/Login">Bookings</a>
+                                </li>
+                            }
 
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <li><a asp-controller="TravelActivities" asp-action="Index">TravelActivities</a></li>
+                                <li><a asp-controller="Itineraries" asp-action="Index">Itineraries</a></li>
+                                <li><a asp-controller="ItineraryActivities" asp-action="Index">ItineraryActivities</a></li>
+                                <li><a asp-controller="ItineraryTravelPackages" asp-action="Index">ItineraryTravelPackages</a></li>
+                            }
+
+                         
                             @* <li><a asp-controller="TravelPackages" asp-action="GetPropertiesHTML">Property Details</a></li> *@
                             @* <li><a asp-controller="Home" asp-action="ContactUs">Contact Us</a></li> *@
                             <partial name="_LoginPartial" />
-                            <li></li>
-                            @* <li><a href="#"><i class="fa fa-calendar"></i> Schedule a booking</a></li> *@
+                           
+                           
+                        
+                            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                            {
+                                <li> <a asp-controller="Bookings" asp-action="Create"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                </li>
+                            }
+                            else if(!User.IsInRole("Admin"))
+                            {
+                                <li>
+                                    <a asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-calendar"></i> Schedule a booking</a>
+                                </li>
+                            }
                         </ul>
 
 

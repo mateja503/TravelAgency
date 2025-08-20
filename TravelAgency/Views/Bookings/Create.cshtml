@@ -21,24 +21,37 @@
             </div> *@
             <div class="form-group" style="padding: 10px">
                 <label class="control-label">Itinerary</label>
-                <select asp-for="ItineraryId" class ="form-control" asp-items="ViewBag.Itinerary">
+                <select asp-for="ItineraryId" class="form-control">
                     <option selected disabled>---SelectItinerary---</option>
+                    @foreach (var itinerary in ViewBag.Itinerary)
+                    {
+                        @foreach (var itineraryTravelPackage in itinerary.ItineraryTravelPackage)
+                        {
+                            <option value="@itinerary.Id"
+                                    data-start="@itineraryTravelPackage.TravelPackage.DateRange.From.ToString(" yyyy-MM-dd")"
+                                    data-end="@itineraryTravelPackage.TravelPackage.DateRange.To.ToString("yyyy-MM-dd")"
+                                    max-capacity="@itineraryTravelPackage.TravelPackage.Capacity">
+                                @itinerary.Name
+                            </option>
+                        }
+                     
+                    }
                 </select>
                 <span asp-validation-for="ItineraryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Capacity" class="control-label"></label>
-                <input asp-for="Capacity" class="form-control" />
+                <input asp-for="Capacity" id="capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateRange.From" class="control-label"></label>
-                <input asp-for="DateRange.From" type="date" class="form-control" />
+                <input asp-for="DateRange.From" type="date" id="fromDate" class="form-control" />
                 <span asp-validation-for="DateRange.From" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateRange.To" class="control-label"></label>
-                <input asp-for="DateRange.To" type="date"  class="form-control" />
+                <input asp-for="DateRange.To" type="date" id="toDate" class="form-control" />
                 <span asp-validation-for="DateRange.To" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding: 10px">
@@ -58,6 +71,38 @@
 <div style="padding: 10px">
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    document.getElementById("itinerarySelect").addEventListener("change", function () {
+        let selected = this.options[this.selectedIndex];
+        let start = selected.getAttribute("data-start");
+        let end = selected.getAttribute("data-end");
+        let maxCapacity = selected.getAttribute("max-capacity");
+
+        let fromDate = document.getElementById("fromDate");
+        let toDate = document.getElementById("toDate");
+        let capacity = document.getElementById("capacity")
+
+        // Apply min/max
+        fromDate.min = start;
+        fromDate.max = end;
+        toDate.min = start;
+        toDate.max = end;
+
+        // Reset if invalid
+        if (fromDate.value && (fromDate.value < start || fromDate.value > end)) {
+            fromDate.value = "";
+        }
+        if (toDate.value && (toDate.value < start || toDate.value > end)) {
+            toDate.value = "";
+        }
+
+        if(capacity > maxCapacity)
+        {
+            capacity = 0;
+        }
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
