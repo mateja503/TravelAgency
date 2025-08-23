@@ -74,7 +74,6 @@ namespace TravelAgency.Controllers
         }
 
         // GET: TravelPackages/Create
-        [Authorize("Admin")]
         public IActionResult Create()
         {
             return View();

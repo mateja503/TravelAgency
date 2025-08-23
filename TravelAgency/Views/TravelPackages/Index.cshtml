@@ -62,7 +62,7 @@
                             <span class="category">@item.Tittle</span>
                             <h6>$@item.Price.Amount.ToString("F2")</h6>
                             @* <h6>$2.264.000</h6> *@
-                            <h1><a asp-controller="TravelPackages" asp-action="Details" asp-route-id="@item.Id">See Itinerary</a></h1>
+                            <h1><a asp-controller="TravelPackages" asp-action="Details" asp-route-id="@item.Id">See TravelPackage</a></h1>
                             <h4>@item.Description</h4>
                             <ul>
                                 <li>From: <span>@item.DateRange.From.ToLongDateString()</span></li>
@@ -82,7 +82,6 @@
                                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                                 {
                                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
                                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 }
 

@@ -25,15 +25,18 @@ namespace TravelAgency.Controllers
         private readonly IItineraryService _itineraryService;
         private readonly ITravelPackageService _travelPackageService;
         private readonly ICustomerService _customerService;
+        private readonly IItineraryTravelPackageService _itineraryTravelPackageService;
         public BookingsController(UserManager<ApplicationUser> userManager,
             IBookingService bookingService, IItineraryService itineraryService,
-            ITravelPackageService travelPackageService, ICustomerService customerService)
+            ITravelPackageService travelPackageService, ICustomerService customerService,
+            IItineraryTravelPackageService itineraryTravelPackageService)
         {
             _userManager = userManager;
             _bookingService = bookingService;
             _itineraryService = itineraryService;
             _travelPackageService = travelPackageService;
             _customerService = customerService;
+            _itineraryTravelPackageService = itineraryTravelPackageService;
         }
 
         // GET: Bookings
@@ -83,8 +86,8 @@ namespace TravelAgency.Controllers
         {
             //var user = await _userManager.GetUserAsync(User);
             //ViewData["Customers"] = new SelectList(await _customerService.GetAll().ToListAsync(),"Id", "FullName");
-            ViewData["Itinerary"] = await _itineraryService.GetAll().Include(u=>u.ItineraryTravelPackage).ThenInclude(u=>u.TravelPackage).ToListAsync();
-            ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
+            ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+            //ViewData["TravelPackage"] = new SelectList(await _travelPackageService.GetAll().ToListAsync(), "Id", "Tittle");
             return View();
         }
 
@@ -97,10 +100,42 @@ namespace TravelAgency.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             booking.CustomerId = currentUser!.CustomerId;
+
+            var itineraryTravelPackage = await _itineraryTravelPackageService
+                .GetAll().Where(u => u.ItineraryId == booking.ItineraryId)
+                .Include(u => u.TravelPackage)
+                .Select(u => new 
+                {
+                    capacityTravelPackage = u.TravelPackage.Capacity,
+                    dataRangeTravelPackage = u.TravelPackage.DateRange,
+                    travelPackage = u.TravelPackage
+                })
+                .FirstOrDefaultAsync();
+
+            if (itineraryTravelPackage is null) 
+            {
+                //ModelState.AddModelError("", "Selected itinerary does not exist."); 
+                ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+                return View();
+            }
+        
+            if (booking.Capacity > itineraryTravelPackage?.capacityTravelPackage) 
+            {
+                ModelState.AddModelError("Capacity", "Capacity exceeds available travel package capacity.");
+                ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+                return View();
+            }
+
+            if (booking.DateRange.From >= itineraryTravelPackage?.dataRangeTravelPackage?.From && booking.DateRange.To <= itineraryTravelPackage.dataRangeTravelPackage.To) 
+            {
+                ModelState.AddModelError("DateRange", "Selected date range is outside of the travel package range.");
+                ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+                return View();
+            }
+
+            itineraryTravelPackage.travelPackage.Capacity -= booking.Capacity;
+            await _travelPackageService.Update(itineraryTravelPackage.travelPackage);
             await _bookingService.Add(booking);
-
-
-
             return RedirectToAction(nameof(Index));
         }
 
