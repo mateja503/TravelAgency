@@ -104,12 +104,6 @@ namespace TravelAgency.Controllers
             var itineraryTravelPackage = await _itineraryTravelPackageService
                 .GetAll().Where(u => u.ItineraryId == booking.ItineraryId)
                 .Include(u => u.TravelPackage)
-                .Select(u => new 
-                {
-                    capacityTravelPackage = u.TravelPackage.Capacity,
-                    dataRangeTravelPackage = u.TravelPackage.DateRange,
-                    travelPackage = u.TravelPackage
-                })
                 .FirstOrDefaultAsync();
 
             if (itineraryTravelPackage is null) 
@@ -119,23 +113,31 @@ namespace TravelAgency.Controllers
                 return View();
             }
         
-            if (booking.Capacity > itineraryTravelPackage?.capacityTravelPackage) 
+            if (booking.Capacity > itineraryTravelPackage?.TravelPackage.Capacity) 
             {
                 ModelState.AddModelError("Capacity", "Capacity exceeds available travel package capacity.");
                 ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
                 return View();
             }
 
-            if (booking.DateRange.From >= itineraryTravelPackage?.dataRangeTravelPackage?.From && booking.DateRange.To <= itineraryTravelPackage.dataRangeTravelPackage.To) 
+            if (booking.DateRange.From < itineraryTravelPackage?.TravelPackage.DateRange.From) 
             {
-                ModelState.AddModelError("DateRange", "Selected date range is outside of the travel package range.");
+                ModelState.AddModelError("DateRange.From", "Selected date range is outside of the travel package range.");
                 ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
                 return View();
             }
 
-            itineraryTravelPackage.travelPackage.Capacity -= booking.Capacity;
-            await _travelPackageService.Update(itineraryTravelPackage.travelPackage);
+            if (booking.DateRange.To > itineraryTravelPackage?.TravelPackage.DateRange.To)
+            {
+                ModelState.AddModelError("DateRange.To", "Selected date range is outside of the travel package range.");
+                ViewData["Itinerary"] = new SelectList(await _itineraryService.GetAll().ToListAsync(), "Id", "Name");
+                return View();
+            }
+
+           
             await _bookingService.Add(booking);
+            itineraryTravelPackage.TravelPackage.Capacity -= booking.Capacity;
+            await _travelPackageService.Update(itineraryTravelPackage.TravelPackage);
             return RedirectToAction(nameof(Index));
         }
 
@@ -217,12 +219,19 @@ namespace TravelAgency.Controllers
         // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,int itineraryId)
         {
             var booking = await _bookingService.GetAll().FirstOrDefaultAsync(m => m.Id == id);
+            var capacity = booking!.Capacity;
             if (booking != null)
             {
                await _bookingService.DeleteById(id);
+               var itineraryTravelPackage =  await _itineraryTravelPackageService.GetAll().Where(u => u.ItineraryId == itineraryId)
+                    .Include(u=>u.TravelPackage) 
+                    .FirstAsync();
+                itineraryTravelPackage.TravelPackage.Capacity += capacity;
+                await _itineraryTravelPackageService.Update(itineraryTravelPackage);
+                    
             }
 
             return RedirectToAction(nameof(Index));

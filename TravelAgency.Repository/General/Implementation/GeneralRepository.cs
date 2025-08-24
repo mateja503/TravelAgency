@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TravelAgency.Repository.Data;
@@ -24,6 +25,13 @@ namespace TravelAgency.Repository.General.Implementation
             var res = await _db.Set<T>().AddAsync(item);
             await _db.SaveChangesAsync();
             return res.Entity;
+        }
+
+        public async Task<List<T>> AddRange(List<T> items)
+        {
+            var res =  _db.Set<T>().AddRangeAsync(items);
+            await _db.SaveChangesAsync();
+            return items;
         }
 
         public async Task<T?> DeleteById(Expression<Func<T, bool>> filter)

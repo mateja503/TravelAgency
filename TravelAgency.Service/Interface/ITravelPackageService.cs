@@ -12,5 +12,6 @@ namespace TravelAgency.Service.Interface
 
     public interface ITravelPackageService : IGeneralService<TravelPackage>
     {
+        public Task<List<TravelPackage>> AddRange(List<TravelPackage> items);
     }
 }

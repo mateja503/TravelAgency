@@ -48,7 +48,19 @@
             <p>
                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    <a asp-action="Create" class="btn btn-primary m-2">Create New</a>
+                    <div class="row">
+
+                        <div class="col">
+                            <a asp-action="Create" class="btn btn-primary m-2">Create New</a>
+
+                        </div>
+
+                        <div class="col">
+                            <a asp-action="IntegrationWithOutSideApi" class="btn btn-warning m-2">Get More TravelPackages</a>
+
+                        </div>
+
+                    </div>
                 }
             </p>
                 <div class="row properties-box">

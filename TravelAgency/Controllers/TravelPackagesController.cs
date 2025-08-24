@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
+using System.Runtime.InteropServices;
+using TravelAgency.ApiResponses;
 using TravelAgency.Domain.DTOs;
 using TravelAgency.Domain.Models;
 using TravelAgency.Domain.Shared;
@@ -19,6 +22,45 @@ namespace TravelAgency.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _travelpackageService.GetAll().ToListAsync());
+        }
+
+
+        public async Task<IActionResult> IntegrationWithOutSideApi() 
+        {
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://google.serper.dev/places?q=travel&apiKey=477393229248fdd379532f565dfbe072ee8e318e");
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var res = await response.Content.ReadFromJsonAsync<TravelPackageResponse>();
+            var random = new Random();
+
+            List<TypeCurrency> randomCurrency = Enum.GetValues(typeof(TypeCurrency))
+                     .Cast<TypeCurrency>()
+                     .ToList();
+          
+            var travelPackages = res.places.Select(u => new TravelPackage
+            {
+                Tittle = u.Title,
+                Description = "This is from outside api inregration",
+                Capacity = random.Next(1, 101),
+                Price = new Price 
+                {
+                    Amount = Math.Round((float)(random.NextDouble() * (2000 - 100) + 100),2),
+                    TypeCurrency = randomCurrency[random.Next(randomCurrency.Count())]
+                },
+                DateRange = new DateRange 
+                {
+                    From = DateTime.Today.AddDays(random.Next(1, 30)),
+                    To = DateTime.Today.AddDays(random.Next(1,90))
+                }
+
+            }).ToList();
+
+            await _travelpackageService.AddRange(travelPackages);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: TravelPackages/Details/5

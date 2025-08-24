@@ -17,5 +17,7 @@ namespace TravelAgency.Repository.General.Interface
         Task<T> Add(T item);
 
         Task<T?> DeleteById(Expression<Func<T, bool>> filter);
+
+        Task<List<T>> AddRange(List<T> items);
     }
 }

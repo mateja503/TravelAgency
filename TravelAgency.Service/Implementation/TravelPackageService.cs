@@ -19,6 +19,11 @@ namespace TravelAgency.Service.Implementation
             return await this._travelPackageRepository.Add(item);
         }
 
+        public async Task<List<TravelPackage>> AddRange(List<TravelPackage> items)
+        {
+            return await _travelPackageRepository.AddRange(items);
+        }
+
         public async Task<TravelPackage?> DeleteById(int id)
         {
             return await this._travelPackageRepository.DeleteById(u=>u.Id == id);

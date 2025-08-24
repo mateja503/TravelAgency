@@ -18,7 +18,5 @@ namespace TravelAgency.Service.General
 
         public Task<T?> Update(T item);
 
-
-
     }
 }
