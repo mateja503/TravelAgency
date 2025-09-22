@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-TravelAgency-4a4c9b6c-048f-40ff-a02d-66e715bd99ae</UserSecretsId>
-  </PropertyGroup>
+  </PropertyGroup>  
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.16" />

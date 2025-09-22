@@ -83,7 +83,7 @@
                             <div class="main-button">
                                 @if(User.Identity.IsAuthenticated && User.IsInRole("Customer"))
                                 {
-                                    <a asp-controller="Bookings" asp-action="Creatre">Schedule a booking</a>
+                                    <a asp-controller="Bookings" asp-action="Create">Schedule a booking</a>
                                 }else if(!User.Identity.IsAuthenticated)
                                 {
                                     <a asp-area="Identity" asp-page="/Account/Login">Schedule a booking</a>
